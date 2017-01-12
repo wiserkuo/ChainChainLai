@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     public final static String EXTRA_MESSAGE= "com.example.myfirstapp.MESSAGE";
+    public final static String EMAIL= "email";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 1da;
     }
 
     /**
@@ -332,10 +333,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
-                data = "?email=" + URLEncoder.encode(email, "UTF-8");
+                data = "?function="+URLEncoder.encode("1","UTF-8");
+                data += "&email=" + URLEncoder.encode(email, "UTF-8");
                 data += "&password=" + URLEncoder.encode(password, "UTF-8");
 
-                link = "http://wiser.synology.me/debt_serverr.php" + data;
+                link = "http://wiser.synology.me/debt_server.php" + data;
                 URL url = new URL(link);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
@@ -371,6 +373,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                    // Toast.makeText(context, query_result, Toast.LENGTH_SHORT).show();
                     Intent intent =new Intent(LoginActivity.this ,MainActivity.class);
                     intent.putExtra(LoginActivity.EXTRA_MESSAGE,query_result);
+                    intent.putExtra(LoginActivity.EMAIL,email);
                     startActivity(intent);
 
                 } catch (JSONException e) {
